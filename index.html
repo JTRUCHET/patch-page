@@ -14,7 +14,6 @@
       --text: #222222;
       --muted: #6b7280;
       --accent: #e11d48;
-      --accent-soft: #ffe4ec;
     }
 
     * {
@@ -50,6 +49,29 @@
       padding: 24px;
     }
 
+    .cartouche-box {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    .cartouche-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .cartouche-header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
     .tabs {
       display: flex;
       gap: 8px;
@@ -61,9 +83,9 @@
       border: 1px solid var(--border);
       background: white;
       color: var(--text);
-      padding: 12px 18px;
+      padding: 11px 15px;
       border-radius: 999px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -112,7 +134,15 @@
       text-align: right;
     }
 
-    .refresh-button {
+    .button-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .refresh-button,
+    .link-button {
       border: 1px solid var(--border);
       background: white;
       color: var(--text);
@@ -121,10 +151,13 @@
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
+      text-decoration: none;
       transition: all 0.15s ease;
+      display: inline-block;
     }
 
-    .refresh-button:hover {
+    .refresh-button:hover,
+    .link-button:hover {
       border-color: var(--accent);
       color: var(--accent);
     }
@@ -136,12 +169,16 @@
       background: transparent;
     }
 
+    .cartouche-frame {
+      height: 220px;
+    }
+
     .form-frame {
       height: 650px;
     }
 
     .view-frame {
-      height: 760px;
+      height: 780px;
     }
 
     footer {
@@ -159,17 +196,23 @@
         padding: 16px;
       }
 
-      .tab-panel {
+      .tab-panel,
+      .cartouche-box {
         padding: 14px;
       }
 
-      .section-header {
+      .section-header,
+      .cartouche-header {
         flex-direction: column;
         align-items: flex-start;
       }
 
       .hint {
         text-align: left;
+      }
+
+      .cartouche-frame {
+        height: 260px;
       }
 
       .form-frame,
@@ -187,24 +230,75 @@
   </header>
 
   <main>
-    <div class="tabs">
-      <button class="tab-button active" onclick="openTab('rappel', this)">
-        1 — Rappeler un patch
-      </button>
+    <section class="cartouche-box">
+      <div class="cartouche-header">
+        <h2>Infos cartouche</h2>
 
-      <button class="tab-button" onclick="openTab('patch', this)">
-        2 — Patch / Câblage IN
-      </button>
-    </div>
+        <div class="button-row">
+          <button class="refresh-button" onclick="reloadIframe('cartoucheFrame')">
+            Rafraîchir cartouche
+          </button>
 
-    <section id="rappel" class="tab-panel active">
-      <div class="section-header">
-        <h2>Rappeler un patch</h2>
-        <span class="hint">Sélectionne une sauvegarde, puis envoie la demande.</span>
+          <a
+            class="link-button"
+            href="https://airtable.com/appk3300Pio4Oia0a/pagL5WpEKw3ywTR9Y"
+            target="_blank"
+            rel="noopener noreferrer">
+            Ouvrir le cartouche
+          </a>
+        </div>
       </div>
 
       <iframe
-        id="rappelFrame"
+        id="cartoucheFrame"
+        class="cartouche-frame"
+        src="https://airtable.com/appk3300Pio4Oia0a/pagL5WpEKw3ywTR9Y"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="220"
+        style="background: transparent; border: 1px solid #ccc;">
+      </iframe>
+    </section>
+
+    <div class="tabs">
+      <button class="tab-button active" onclick="openTab('selectionPatch', this, 'selectionPatchFrame')">
+        1 — Sélection patch
+      </button>
+
+      <button class="tab-button" onclick="openTab('patchIn', this, 'patchInFrame')">
+        2 — Patch IN
+      </button>
+
+      <button class="tab-button" onclick="openTab('cablageIn', this, 'cablageInFrame')">
+        3 — Câblage IN
+      </button>
+
+      <button class="tab-button" onclick="openTab('kit', this, 'kitFrame')">
+        4 — Kit
+      </button>
+
+      <button class="tab-button" onclick="openTab('cablageOut', this, 'cablageOutFrame')">
+        5 — Câblage OUT
+      </button>
+
+      <button class="tab-button" onclick="openTab('recapKit', this, 'recapKitFrame')">
+        6 — Récap Kit
+      </button>
+
+      <button class="tab-button" onclick="openTab('recapCablage', this, 'recapCablageFrame')">
+        7 — Récap Câblage
+      </button>
+    </div>
+
+    <section id="selectionPatch" class="tab-panel active">
+      <div class="section-header">
+        <h2>Sélection patch</h2>
+        <span class="hint">Choisis une sauvegarde puis envoie le rappel.</span>
+      </div>
+
+      <iframe
+        id="selectionPatchFrame"
         class="airtable-embed form-frame"
         src="https://airtable.com/embed/appk3300Pio4Oia0a/pagm7SkUowrxaXnhi/form"
         frameborder="0"
@@ -215,23 +309,122 @@
       </iframe>
     </section>
 
-    <section id="patch" class="tab-panel">
+    <section id="patchIn" class="tab-panel">
       <div class="section-header">
-        <h2>Patch / Câblage IN</h2>
-
-        <button class="refresh-button" onclick="reloadIframe('patchFrame')">
-          Rafraîchir la vue
+        <h2>Patch IN</h2>
+        <button class="refresh-button" onclick="reloadIframe('patchInFrame')">
+          Rafraîchir
         </button>
       </div>
 
       <iframe
-        id="patchFrame"
+        id="patchInFrame"
         class="airtable-embed view-frame"
-        src="https://airtable.com/embed/appk3300Pio4Oia0a/shr3uapd3j1O4sr98"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/shr3uapd3j1O4sr98?viewControls=on"
         frameborder="0"
         onmousewheel=""
         width="100%"
-        height="760"
+        height="780"
+        style="background: transparent; border: 1px solid #ccc;">
+      </iframe>
+    </section>
+
+    <section id="cablageIn" class="tab-panel">
+      <div class="section-header">
+        <h2>Câblage IN</h2>
+        <button class="refresh-button" onclick="reloadIframe('cablageInFrame')">
+          Rafraîchir
+        </button>
+      </div>
+
+      <iframe
+        id="cablageInFrame"
+        class="airtable-embed view-frame"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/shrCkP44QlwoJco8A?viewControls=on"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="780"
+        style="background: transparent; border: 1px solid #ccc;">
+      </iframe>
+    </section>
+
+    <section id="kit" class="tab-panel">
+      <div class="section-header">
+        <h2>Kit</h2>
+        <button class="refresh-button" onclick="reloadIframe('kitFrame')">
+          Rafraîchir
+        </button>
+      </div>
+
+      <iframe
+        id="kitFrame"
+        class="airtable-embed view-frame"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/shrccX8ePHbmtY5Qc?viewControls=on"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="780"
+        style="background: transparent; border: 1px solid #ccc;">
+      </iframe>
+    </section>
+
+    <section id="cablageOut" class="tab-panel">
+      <div class="section-header">
+        <h2>Câblage OUT</h2>
+        <button class="refresh-button" onclick="reloadIframe('cablageOutFrame')">
+          Rafraîchir
+        </button>
+      </div>
+
+      <iframe
+        id="cablageOutFrame"
+        class="airtable-embed view-frame"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/shrtqPY1V2YOPABpO?viewControls=on"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="780"
+        style="background: transparent; border: 1px solid #ccc;">
+      </iframe>
+    </section>
+
+    <section id="recapKit" class="tab-panel">
+      <div class="section-header">
+        <h2>Récap Kit</h2>
+        <button class="refresh-button" onclick="reloadIframe('recapKitFrame')">
+          Rafraîchir
+        </button>
+      </div>
+
+      <iframe
+        id="recapKitFrame"
+        class="airtable-embed view-frame"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/shrRvgAj9QcVHkEXL?viewControls=on"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="780"
+        style="background: transparent; border: 1px solid #ccc;">
+      </iframe>
+    </section>
+
+    <section id="recapCablage" class="tab-panel">
+      <div class="section-header">
+        <h2>Récap Câblage</h2>
+        <button class="refresh-button" onclick="reloadIframe('recapCablageFrame')">
+          Rafraîchir
+        </button>
+      </div>
+
+      <iframe
+        id="recapCablageFrame"
+        class="airtable-embed view-frame"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/shrndSnIy5my1h4eW?viewControls=on"
+        frameborder="0"
+        onmousewheel=""
+        width="100%"
+        height="780"
         style="background: transparent; border: 1px solid #ccc;">
       </iframe>
     </section>
@@ -246,11 +439,14 @@
       const iframe = document.getElementById(iframeId);
       if (!iframe) return;
 
-      const baseSrc = iframe.getAttribute("src").split("?")[0];
-      iframe.setAttribute("src", baseSrc + "?refresh=" + Date.now());
+      const currentSrc = iframe.getAttribute("src");
+      const cleanSrc = currentSrc.split("&refresh=")[0].split("?refresh=")[0];
+
+      const separator = cleanSrc.includes("?") ? "&" : "?";
+      iframe.setAttribute("src", cleanSrc + separator + "refresh=" + Date.now());
     }
 
-    function openTab(tabId, button) {
+    function openTab(tabId, button, iframeId) {
       const panels = document.querySelectorAll(".tab-panel");
       const buttons = document.querySelectorAll(".tab-button");
 
@@ -260,9 +456,11 @@
       document.getElementById(tabId).classList.add("active");
       button.classList.add("active");
 
-      if (tabId === "patch") {
-        reloadIframe("patchFrame");
+      if (iframeId) {
+        reloadIframe(iframeId);
       }
+
+      reloadIframe("cartoucheFrame");
     }
   </script>
 </body>
