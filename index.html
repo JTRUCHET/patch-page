@@ -4,48 +4,165 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Patch RESOTECH</title>
+
   <style>
+    :root {
+      --bg: #f4f4f4;
+      --dark: #111827;
+      --card: #ffffff;
+      --border: #d1d5db;
+      --text: #222222;
+      --muted: #6b7280;
+      --accent: #e11d48;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
     header {
-      background: #111827;
+      background: var(--dark);
       color: white;
       padding: 24px 32px;
     }
 
-    h1 {
+    header h1 {
       margin: 0;
       font-size: 28px;
+      letter-spacing: 0.3px;
+    }
+
+    header p {
+      margin: 8px 0 0;
+      color: #d1d5db;
+      font-size: 14px;
     }
 
     main {
-      padding: 32px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      max-width: 900px;
+    section {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    iframe {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: transparent;
+    }
+
+    .form-frame {
+      height: 533px;
+    }
+
+    .view-frame {
+      height: 720px;
+    }
+
+    footer {
+      padding: 0 28px 28px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 20px;
+      }
+
+      main {
+        padding: 16px;
+      }
+
+      section {
+        padding: 14px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .view-frame {
+        height: 620px;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Patch RESOTECH</h1>
+    <p>Portail de rappel et consultation des feuilles de patch.</p>
   </header>
 
   <main>
-    <div class="card">
-      <h2>Portail patch</h2>
-      <p>La page est en ligne. Prochaine étape : intégration des vues Airtable.</p>
-    </div>
+    <section>
+      <div class="section-header">
+        <h2>Rappeler un patch</h2>
+        <span class="hint">Sélectionne une sauvegarde, puis envoie la demande.</span>
+      </div>
+
+      <iframe
+        class="airtable-embed form-frame"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/pagm7SkUowrxaXnhi/form"
+        frameborder="0"
+        onmousewheel="">
+      </iframe>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <h2>Patch / Câblage IN</h2>
+        <span class="hint">Vue Airtable en lecture seule.</span>
+      </div>
+
+      <iframe
+        class="airtable-embed view-frame"
+        src="https://airtable.com/embed/appk3300Pio4Oia0a/shrdiV0Vq7X37lkYj"
+        frameborder="0"
+        onmousewheel="">
+      </iframe>
+    </section>
   </main>
+
+  <footer>
+    Portail technique RESOTECH — 791 Concept
+  </footer>
 </body>
 </html>
