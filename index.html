@@ -112,6 +112,23 @@
       text-align: right;
     }
 
+    .refresh-button {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .refresh-button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     iframe {
       width: 100%;
       border: 1px solid var(--border);
@@ -187,6 +204,7 @@
       </div>
 
       <iframe
+        id="rappelFrame"
         class="airtable-embed form-frame"
         src="https://airtable.com/embed/appk3300Pio4Oia0a/pagm7SkUowrxaXnhi/form"
         frameborder="0"
@@ -200,10 +218,14 @@
     <section id="patch" class="tab-panel">
       <div class="section-header">
         <h2>Patch / Câblage IN</h2>
-        <span class="hint">Vue Airtable en lecture seule.</span>
+
+        <button class="refresh-button" onclick="reloadIframe('patchFrame')">
+          Rafraîchir la vue
+        </button>
       </div>
 
       <iframe
+        id="patchFrame"
         class="airtable-embed view-frame"
         src="https://airtable.com/embed/appk3300Pio4Oia0a/shr3uapd3j1O4sr98"
         frameborder="0"
@@ -220,6 +242,14 @@
   </footer>
 
   <script>
+    function reloadIframe(iframeId) {
+      const iframe = document.getElementById(iframeId);
+      if (!iframe) return;
+
+      const baseSrc = iframe.getAttribute("src").split("?")[0];
+      iframe.setAttribute("src", baseSrc + "?refresh=" + Date.now());
+    }
+
     function openTab(tabId, button) {
       const panels = document.querySelectorAll(".tab-panel");
       const buttons = document.querySelectorAll(".tab-button");
@@ -229,6 +259,10 @@
 
       document.getElementById(tabId).classList.add("active");
       button.classList.add("active");
+
+      if (tabId === "patch") {
+        reloadIframe("patchFrame");
+      }
     }
   </script>
 </body>
