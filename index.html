@@ -72,6 +72,24 @@
       font-size: 20px;
     }
 
+    .cartouche-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 14px;
+    }
+
+    .mini-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #fafafa;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+    }
+
     .tabs {
       display: flex;
       gap: 8px;
@@ -128,12 +146,6 @@
       font-size: 22px;
     }
 
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      text-align: right;
-    }
-
     .button-row {
       display: flex;
       gap: 8px;
@@ -141,8 +153,7 @@
       align-items: center;
     }
 
-    .refresh-button,
-    .link-button {
+    .refresh-button {
       border: 1px solid var(--border);
       background: white;
       color: var(--text);
@@ -151,13 +162,10 @@
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
-      text-decoration: none;
       transition: all 0.15s ease;
-      display: inline-block;
     }
 
-    .refresh-button:hover,
-    .link-button:hover {
+    .refresh-button:hover {
       border-color: var(--accent);
       color: var(--accent);
     }
@@ -169,8 +177,12 @@
       background: transparent;
     }
 
-    .cartouche-frame {
-      height: 220px;
+    .infos-frame {
+      height: 230px;
+    }
+
+    .commentaire-frame {
+      height: 230px;
     }
 
     .form-frame {
@@ -185,6 +197,12 @@
       padding: 0 24px 24px;
       color: var(--muted);
       font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .cartouche-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 700px) {
@@ -207,11 +225,8 @@
         align-items: flex-start;
       }
 
-      .hint {
-        text-align: left;
-      }
-
-      .cartouche-frame {
+      .infos-frame,
+      .commentaire-frame {
         height: 260px;
       }
 
@@ -232,33 +247,50 @@
   <main>
     <section class="cartouche-box">
       <div class="cartouche-header">
-        <h2>Infos cartouche</h2>
+        <h2>Cartouche projet</h2>
 
         <div class="button-row">
-          <button class="refresh-button" onclick="reloadIframe('cartoucheFrame')">
-            Rafraîchir cartouche
+          <button class="refresh-button" onclick="reloadIframe('infosFrame')">
+            Rafraîchir infos
           </button>
 
-          <a
-            class="link-button"
-            href="https://airtable.com/appk3300Pio4Oia0a/pagL5WpEKw3ywTR9Y"
-            target="_blank"
-            rel="noopener noreferrer">
-            Ouvrir le cartouche
-          </a>
+          <button class="refresh-button" onclick="reloadIframe('commentaireFrame')">
+            Rafraîchir commentaire
+          </button>
         </div>
       </div>
 
-      <iframe
-        id="cartoucheFrame"
-        class="cartouche-frame"
-        src="https://airtable.com/appk3300Pio4Oia0a/pagL5WpEKw3ywTR9Y"
-        frameborder="0"
-        onmousewheel=""
-        width="100%"
-        height="220"
-        style="background: transparent; border: 1px solid #ccc;">
-      </iframe>
+      <div class="cartouche-grid">
+        <div class="mini-card">
+          <h3>Infos</h3>
+
+          <iframe
+            id="infosFrame"
+            class="airtable-embed infos-frame"
+            src="https://airtable.com/embed/appk3300Pio4Oia0a/shroVkbLZ6afeTh4S"
+            frameborder="0"
+            onmousewheel=""
+            width="100%"
+            height="230"
+            style="background: transparent; border: 1px solid #ccc;">
+          </iframe>
+        </div>
+
+        <div class="mini-card">
+          <h3>Commentaire</h3>
+
+          <iframe
+            id="commentaireFrame"
+            class="airtable-embed commentaire-frame"
+            src="https://airtable.com/embed/appk3300Pio4Oia0a/shraKL91MWTGYdLcc"
+            frameborder="0"
+            onmousewheel=""
+            width="100%"
+            height="230"
+            style="background: transparent; border: 1px solid #ccc;">
+          </iframe>
+        </div>
+      </div>
     </section>
 
     <div class="tabs">
@@ -294,7 +326,6 @@
     <section id="selectionPatch" class="tab-panel active">
       <div class="section-header">
         <h2>Sélection patch</h2>
-        <span class="hint">Choisis une sauvegarde puis envoie le rappel.</span>
       </div>
 
       <iframe
@@ -460,7 +491,8 @@
         reloadIframe(iframeId);
       }
 
-      reloadIframe("cartoucheFrame");
+      reloadIframe("infosFrame");
+      reloadIframe("commentaireFrame");
     }
   </script>
 </body>
